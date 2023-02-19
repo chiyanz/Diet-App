@@ -4,7 +4,6 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from "lib/session";
 import connect from '@/util/dbConnect'
 import User from '../../model/User'
-import { urlencoded } from 'express';
 
 const appId = process.env.NEXT_PUBLIC_APP_ID
 const appKey = process.env.NEXT_PUBLIC_APP_KEY

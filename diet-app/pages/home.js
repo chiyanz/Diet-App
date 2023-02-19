@@ -84,7 +84,8 @@ export default function Home({user}) {
                             <Stack spacing={2}>
                                 <Heading fontSize="xl">{meal.name}</Heading>
                                 <Box>
-                                    {meal.cuisine.map(name => <Tag>{name.charAt(0).toUpperCase() + name.slice(1)}</Tag>)}
+                                    {/* {meal.cuisine.map(name => <Tag>{name.charAt(0).toUpperCase() + name.slice(1)}</Tag>)} */}
+                                    <Tag>{meal.cuisine}</Tag>
                                 </Box>
                                 <Box fontSize="sm">
                                     <Text>⚡ {Math.round(meal.calories)} Calories</Text>
