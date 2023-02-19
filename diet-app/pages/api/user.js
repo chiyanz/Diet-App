@@ -30,7 +30,7 @@ async function handler(req, res) {
   if(body.history) {
     console.log('updating history')
     console.log(body.history)
-    User.updateOne({_id: req.session.user._id}, {
+    const doc = await User.updateOne({_id: req.session.user._id}, {
       $push: {
         history: {$each: body.history}
       }

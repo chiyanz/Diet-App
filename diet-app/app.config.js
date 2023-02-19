@@ -1,3 +1,3 @@
 module.exports = {
-    appName: "Diet App"
+    appName: "DINE"
 }

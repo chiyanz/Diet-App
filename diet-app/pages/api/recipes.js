@@ -16,7 +16,7 @@ export default withIronSessionApiRoute(handler, sessionOptions)
 async function handler(req, res) {
   const query = req.query
   const userHistory = await User.findOne({_id: req.session.user._id})
-  const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}`
+  const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}&cuisine=chinese`
   let paramStr = querystring.stringify(query)
   if(!query.time) {
     paramStr += "&time=1%2B"
@@ -44,9 +44,7 @@ async function handler(req, res) {
   const test = filteredRecipeInfo.map((obj) => {
     return {calories: obj.calories, time: obj.time, cuisine: obj.cuisine}
   })
-
-  // const results = rankData(userHistory.history, test)
-  // console.log(results)
+  const results = await rankData(userHistory.history, test)
 
   
   // default to 20 pages fetched 
