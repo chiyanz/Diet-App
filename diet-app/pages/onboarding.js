@@ -1,6 +1,8 @@
 import { appName } from "@/app.config";
 import { Button, Flex, Heading, SlideFade, Text } from "@chakra-ui/react";
 import { useState } from "react";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "lib/session";
 
 const pageStyle = {
     position:"absolute", 
@@ -24,7 +26,7 @@ function Option({selected, children, ...props}) {
     </Button>
 }
 
-export default function Onboarding() {
+export default function Onboarding({user}) {
     const [page, setPage] = useState(1);
     const [excludes, setExcludes] = useState([]);
     const [health, setHealth] = useState([]);
@@ -52,8 +54,9 @@ export default function Onboarding() {
         fetch("/api/user", {
             method: "POST",
             body: JSON.stringify({
+                _id: user._id,
                 preferences: {
-                    excludes: excludeValues.filter((val, i) => excludes[i]),
+                    excluded: excludeValues.filter((val, i) => excludes[i]),
                     health: healthValues.filter((val, i) => health[i])
                 }
             }),
@@ -115,3 +118,27 @@ export default function Onboarding() {
     </Page>
     </>
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({
+    req,
+    res,
+  }) {
+    const user = req.session.user;
+    console.log(user)
+    if (user === undefined) {
+      console.log("not logged in")
+      res.setHeader("location", "/");
+      res.statusCode = 302;
+      res.end();
+      return {
+        props: {
+          user: { isLoggedIn: false}
+        },
+      };
+    }
+  
+    return {
+      props: { user: req.session.user },
+    };
+  },
+  sessionOptions);
