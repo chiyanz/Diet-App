@@ -8,8 +8,15 @@ connect()
 export default withIronSessionApiRoute(handler, sessionOptions)
 
 async function handler(req, res) {
+  if(req.method == "GET") {
+    console.log("getting user info")
+    console.log(req.query._id)
+    const user = await User.findOne({_id: req.query._id})
+    if(user) {
+      res.json({user})
+    }
+  }
   const body = req.body
-  console.log(req.session)
   // serves to either 
   // 1. update/initialize user preferences
   // 2. add to the list of user's past 
@@ -21,8 +28,6 @@ async function handler(req, res) {
         preferences: body.preferences
       }
     }).then(() => res.status(200).json({message: 'updated user preferences'}))
-    const user = await User.findOne({_id: body._id})
-    console.log(user)
   }
 
   if(body.history) {
@@ -33,7 +38,5 @@ async function handler(req, res) {
         history: body.history
       }
     }).then(() => res.status(200).json({message: 'updated user history'}))
-    const user = await User.findOne({_id: body._id})
-    console.log(user)
   }
 }
