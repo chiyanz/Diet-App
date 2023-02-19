@@ -21,10 +21,10 @@ export default function findMeal() {
         <Flex flexDir="column" height="100%" gap={8}>
             <Heading>What are you making today?</Heading>
             <Flex flexDir="column" gap={8} flex={1}>
-                <Button flex={1} onClick={()=>{}}>Breakfast</Button>
-                <Button flex={1}>Lunch</Button>
-                <Button flex={1}>Dinner</Button>
-                <Button flex={1}>Snack</Button>
+                <Button flex={1} onClick={()=>{}} fontSize="lg">Breakfast</Button>
+                <Button flex={1} fontSize="lg">Lunch</Button>
+                <Button flex={1} fontSize="lg">Dinner</Button>
+                <Button flex={1} fontSize="lg">Snack</Button>
             </Flex>
         </Flex>
     </Page>

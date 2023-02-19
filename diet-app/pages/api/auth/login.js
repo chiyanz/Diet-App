@@ -7,9 +7,9 @@ export default async function handler(req, res) {
   const {username, password} = req.body
   const user = await User.findOne({username, password})
   if(!user) {
-    return res.json({status: 'User not found'})
+    return res.status(400).json("Error");
   }
   else {
-    return res.sendStatus(200);
+    return res.status(200).json("OK");
   }
 }

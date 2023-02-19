@@ -9,7 +9,7 @@ export default function Index() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [error, setError] = useState(false);
 
     function handleChange(fn) {
         return e => fn(e.target.value)
@@ -17,14 +17,27 @@ export default function Index() {
 
     function logIn(e) {
         e.preventDefault();
+        setLoading(true);
         fetch("/api/auth/login", {
             method: "POST",
-            body: {
+            body: JSON.stringify({
                 username: username,
                 password: password
+            }),
+            headers: {
+                'Content-Type': 'application/json'
             }
         }).then(res => res.json())
-        .then(data => console.log(data));
+        .then(res => {
+            setLoading(false);
+            if (res.ok) return res.json();
+            else throw new Error()
+        })
+        .then(data => setError(""))
+        .catch(e => {
+            setLoading(false);
+            setError(e.message);
+        });
     }
     
     return <>
@@ -40,7 +53,8 @@ export default function Index() {
                     <Collapse in={error}>
                         <Alert status="error" mt={2}>
                             <AlertIcon />
-                            <AlertTitle>{error}</AlertTitle>
+                            <AlertTitle>An error occurred.</AlertTitle>
+                            <AlertDescription>Please try again.</AlertDescription>
                         </Alert>
                     </Collapse> 
                 </CardHeader>
