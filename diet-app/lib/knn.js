@@ -1,3 +1,5 @@
+import splitData from './splitData';
+
 const tf = require('@tensorflow/tfjs');
 const knnClassifier = require('@tensorflow-models/knn-classifier');
 
@@ -5,12 +7,14 @@ const NUM_CLASSES = 3
 const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian']
 
 export default async function rankData(train, test) {
+  train = splitData(train)
   const classifier = knnClassifier.create();
-  train.forEach((obj, i) => {
-    classifier.addExample(tf.tensor(Object.values(obj)), obj.rating)
+  train[0].forEach((arr, i) => {
+    classifier.addExample(tf.tensor(arr), train[1][i])
   })
 
-  let predictions = await Promise.all(test.map(async (arr) => {
+  test = splitData(test)
+  let predictions = await Promise.all(test[0].map(async (arr) => {
     const result = await classifier.predictClass(tf.tensor(arr), 3)
     return result.label
   }))

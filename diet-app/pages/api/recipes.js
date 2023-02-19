@@ -4,9 +4,11 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from "lib/session";
 import connect from '@/util/dbConnect'
 import User from '../../model/User'
+import { urlencoded } from 'express';
 
 const appId = process.env.NEXT_PUBLIC_APP_ID
 const appKey = process.env.NEXT_PUBLIC_APP_KEY
+const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian']
 
 connect()
 
@@ -36,11 +38,18 @@ async function handler(req, res) {
       time: details.totalTime, // total prep time required
       ingredients: details.ingredientLines, // list of ingredients required and their respecive amount
       link: details.url, // link to the recipe URL for execution directions 
-      cuisine: details.cuisineType,
+      cuisine: details.cuisineType[0],
       img: details.images.REGULAR.url // url of the image 
     })
   }
   
+  const test = filteredRecipeInfo.map((obj) => {
+    return {calories: obj.calories, time: obj.time, cuisine: obj.cuisine}
+  })
+
+  const results = rankData(userHistory.history, test)
+  console.log(results)
+
   
   // default to 20 pages fetched 
   // console.log(filteredRecipeInfo)
