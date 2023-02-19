@@ -1,12 +1,15 @@
 import connect from '@/util/dbConnect'
 import User from '../../model/User'
-
+import { withIronSessionApiRoute } from 'iron-session/next'
+import { sessionOptions } from "lib/session";
 
 connect()
 
-export default async function handler(req, res) {
+export default withIronSessionApiRoute(handler, sessionOptions)
+
+async function handler(req, res) {
   const body = req.body
-  console.log(body)
+  console.log(req.session)
   // serves to either 
   // 1. update/initialize user preferences
   // 2. add to the list of user's past 

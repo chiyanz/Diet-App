@@ -32,7 +32,8 @@ export default function Register() {
             }),
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: "include"
         })
         .then(res => {
             setLoading(false);

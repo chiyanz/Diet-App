@@ -29,7 +29,8 @@ export default function Index() {
             }),
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: "include"
         })
         .then(res => {
             setLoading(false);
