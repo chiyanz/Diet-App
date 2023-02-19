@@ -6,11 +6,10 @@ const preferencesSchema = new mongoose.Schema({
 })
 
 const historySchema = new mongoose.Schema({
-  name: String,
   calories: Number,
   time: Number,
-  ingredients: [String],
-  cuisine: String
+  cuisine: String,
+  rating: Number
 })
 
 const userSchema = new mongoose.Schema({

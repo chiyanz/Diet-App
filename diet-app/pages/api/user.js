@@ -35,7 +35,7 @@ async function handler(req, res) {
     console.log(body.history)
     User.updateOne({_id: body._id}, {
       $push: {
-        history: body.history
+        history: {$each: body.history}
       }
     }).then(() => res.status(200).json({message: 'updated user history'}))
   }

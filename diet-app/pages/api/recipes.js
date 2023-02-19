@@ -1,10 +1,16 @@
 import querystring from 'querystring'
+import rankData from '@/lib/knn'
+import { withIronSessionApiRoute } from 'iron-session/next'
+import { sessionOptions } from "lib/session";
 
 const appId = process.env.NEXT_PUBLIC_APP_ID
 const appKey = process.env.NEXT_PUBLIC_APP_KEY
 
-export default async function handler(req, res) {
+export default withIronSessionApiRoute(handler, sessionOptions)
+
+async function handler(req, res) {
   const query = req.query
+  console.log(req.session.user)
   const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}`
   let paramStr = querystring.stringify(query)
   if(!query.time) {
@@ -28,7 +34,9 @@ export default async function handler(req, res) {
       cuisine: details.cuisineType,
       img: details.images.REGULAR.url // url of the image 
     })
-  } 
+  }
+  
+  
   // default to 20 pages fetched 
   // console.log(filteredRecipeInfo)
   res.status(200).json(filteredRecipeInfo)
