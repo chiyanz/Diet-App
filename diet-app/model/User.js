@@ -7,8 +7,8 @@ const preferencesSchema = new mongoose.Schema({
 
 const historySchema = new mongoose.Schema({
   name: String,
-  calories: String,
-  time: String,
+  calories: Number,
+  time: Number,
   ingredients: [String],
   cuisine: String
 })
@@ -23,7 +23,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  preferences: preferencesSchema,
+  preferences: {
+    type: preferencesSchema,
+    require: true
+  },
   history: {
     type: [historySchema],
     require: true
