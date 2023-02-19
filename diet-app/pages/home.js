@@ -14,9 +14,12 @@ export default function Home() {
 
     useEffect(() => {
         setUsername("username")
-        fetch("/api/recipes?q=beef")
+        fetch("/api/recipes?q=ramen")
         .then(raw => raw.json())
-        .then(data => console.log(data))
+        .then(recipes => {
+            setMeals(recipes);
+            setMealsLoaded(true);
+        })
         .catch(err => setError(true));
     }, [])
 
@@ -45,22 +48,25 @@ export default function Home() {
                 <Heading fontSize="2xl">Recommended</Heading>
                 {mealsLoaded ? 
                 <Fade in={mealsLoaded}>
+                    <Stack spacing={4}>
+                    {meals.map(meal => 
+                    <NextLink href={meal.link} key={meal.name}>
                     <Card>
-                        <Image objectFit="cover" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Hamburger_%28black_bg%29.jpg/640px-Hamburger_%28black_bg%29.jpg"/>
+                        <Image objectFit="cover" src={meal.img}/>
                         <CardBody>
                             <Stack spacing={2}>
-                                <Heading fontSize="xl">Yummy meal</Heading>
-                                <Box>
-                                    <Tag>Chinese</Tag> <Tag>Vegan</Tag>
-                                </Box>
+                                <Heading fontSize="xl">{meal.name}</Heading>
                                 <Box fontSize="sm">
-                                    <Text>⚡ 300 Calories</Text>
-                                    <Text>🕛 15-20min</Text>
+                                    <Text>⚡ {Math.round(meal.calories)} Calories</Text>
+                                    <Text>🕛 {meal.time}min</Text>
                                     <Text></Text>
                                 </Box>
                             </Stack>
                         </CardBody>
                     </Card>
+                    </NextLink>
+                    )}  
+                    </Stack>
                 </Fade> :
                 <Center pt={8}>
                     <Spinner/>
@@ -69,7 +75,7 @@ export default function Home() {
             </Stack>
         </Box>
         <Center pos="fixed" bottom="0" w="100%">
-            <Button bg="primary.bg" color="primary.fg" fontSize="xl" py={8} w="100%" m={8} as="div">
+            <Button bg="primary.bg" color="primary.fg" fontSize="xl" shadow="lg" py={8} w="100%" mx={12} my={4} as="div">
                 <Link as={NextLink} href="/find-meal">New Meal</Link>
             </Button>
         </Center>
