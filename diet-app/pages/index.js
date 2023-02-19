@@ -2,17 +2,20 @@ import styles from '@/styles/shared.module.css';
 import { AtSignIcon, LockIcon } from '@chakra-ui/icons';
 import { Button, Card, CardBody, CardHeader, Heading, Input, InputGroup, InputLeftAddon, Link, Stack, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import { appName } from '@/app.config';
 
 export default function Index() {
     return <>
         <main className={styles.main}>
             <Stack spacing={8}>
             <Stack spacing={4}>
-                <Heading>🥗 Diet App</Heading>
+                <Heading>🥗 {appName}</Heading>
                 <Text fontSize="xl">Personalized meals based on your preferences</Text>
             </Stack>
             <Card>
-                <CardHeader>Log In</CardHeader>
+                <CardHeader>
+                    <Heading fontSize="xl">Log In</Heading>
+                </CardHeader>
                 <CardBody>
                     <Stack spacing={4}>
                         <InputGroup>
@@ -27,8 +30,8 @@ export default function Index() {
                                 children={<LockIcon />} />
                             <Input placeholder="Password" name="password" type="password"></Input>
                         </InputGroup>
-                        <Button>Log in</Button>
-                        <Text>Don't have an account? <NextLink href="/register"><Link color="teal.500">Create an account</Link></NextLink>
+                        <Button bg="primary.bg" color="primary.fg">Log in</Button>
+                        <Text>Don't have an account? <Link as={NextLink} color="primary.bg" href="/register">Create an account</Link>
                         </Text>
                     </Stack>
                 </CardBody>
