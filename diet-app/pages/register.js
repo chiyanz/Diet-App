@@ -25,8 +25,8 @@ export default function Register() {
                     children={<LockIcon />} />
                 <Input placeholder="Confirm Password" name="confirm-password" type="password"></Input>
             </InputGroup>
-            <Button>Register</Button>
-            <Text>Already have an account? <NextLink href="/"><Link color="teal.500">Log in</Link></NextLink>
+            <Button bg="primary.bg" color="primary.fg">Register</Button>
+            <Text>Already have an account? <Link as={NextLink} color="primary.bg" href="/">Log in</Link>
             </Text>
         </Stack>
     </main>
