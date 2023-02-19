@@ -1,24 +1,18 @@
+import { filter } from '@chakra-ui/react'
+import querystring from 'querystring'
+
 const appId = process.env.NEXT_PUBLIC_APP_ID
 const appKey = process.env.NEXT_PUBLIC_APP_KEY
 
 export default async function handler(req, res) {
-  let filters = {}
   const query = req.query
-  const validParams = ['q', 'excluded', 'ingr', 'diet', 'health', 'cuisineType', 'mealType', 'calories', 'time']
-
   const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}`
-  let paramStr = ""
-  for(const key in query) {
-    if(validParams.includes(key)) {
-      console.log("valid param")
-      paramStr += `&${key}=${query[key]}`
-    }
-  }
-  const response = await fetch(endpoint.concat(paramStr))
+  let paramStr = querystring.stringify(query)
+  const response = await fetch(endpoint + '&' + paramStr)
   const data = await response.json()
   console.log(endpoint + paramStr)
-  res.status(200).json(data.hits[1]) 
-  // console.log(data.hits[1].recipe)
+  console.log(data)
+
   let filteredRecipeInfo = []
   for(const recipe of data.hits) {
     const details = recipe.recipe
@@ -33,4 +27,5 @@ export default async function handler(req, res) {
   } 
   // default to 20 pages fetched 
   console.log(filteredRecipeInfo)
+  res.status(200).json(filteredRecipeInfo)
 }
