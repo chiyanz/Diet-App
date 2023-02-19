@@ -7,6 +7,7 @@ const NUM_CLASSES = 3
 const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian']
 
 export default async function rankData(train, test) {
+  console.log(train)
   train = splitData(train)
   const classifier = knnClassifier.create();
   train[0].forEach((arr, i) => {
@@ -19,7 +20,7 @@ export default async function rankData(train, test) {
   
   let predictions = await Promise.all(test[0].map(async (arr) => {
     const result = await classifier.predictClass(tf.tensor(arr), 1)
-    return result.label
+    return parseInt(result.label)
   }))
   return predictions
 }
