@@ -23,9 +23,7 @@ export default function Home({user}) {
 
     useEffect(() => {
         setUsername(user.username)
-        let data = { "_id" : user._id };
-        let url = new URL("http://localhost:3000/api/user");
-        for (let k in data) { url.searchParams.append(k, data[k]) }
+        let url = `/api/user?_id=${user._id}`
         fetch(url).then((res) => {
             if(res.ok)
                 return res.json()
