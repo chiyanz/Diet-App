@@ -61,7 +61,7 @@ export default function Recommended({user}) {
     return loading ? <Center><Spinner></Spinner></Center> : 
     <Flex flexDir="row" flexWrap="nowrap" flex="none" w="100%" h="100vh" overflowX="auto" scrollSnapType="x mandatory" alignSelf="stretch">
     {
-        recipes.map((recipe, i) => <Card w="100%" h="100%" flex="none" scrollSnapStop="always" scrollSnapAlign="center" overflowY="auto">
+        recipes.map((recipe, i) => <Card key={i} w="100%" h="100%" flex="none" scrollSnapStop="always" scrollSnapAlign="center" overflowY="auto">
             <Image objectFit="cover" src={recipe.img}/>
             <CardBody>
                 <Stack spacing={2}>
@@ -80,7 +80,7 @@ export default function Recommended({user}) {
                     <Text fontWeight="bold">Ingredients:</Text>
                     <ul style={{listStylePosition: "inside", padding: "4px 16px"}}>
                         {
-                            recipe.ingredients.map(ingredient => <li>{ingredient}</li>)
+                            recipe.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)
                         }
                     </ul>
                     {/*href={recipe.link} target="_blank"*/}

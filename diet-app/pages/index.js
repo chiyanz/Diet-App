@@ -72,17 +72,17 @@ export default function Index() {
                         <InputGroup>
                             <InputLeftAddon
                                 pointerEvents="none"
-                                children={<AtSignIcon />} />
+                            ><AtSignIcon /></InputLeftAddon>
                             <Input placeholder="Username" name="username" onChange={handleChange(setUsername)} value={username} />
                         </InputGroup>
                         <InputGroup>
                             <InputLeftAddon
                                 pointerEvents="none"
-                                children={<LockIcon />} />
+                            ><LockIcon /></InputLeftAddon>
                             <Input placeholder="Password" name="password" type="password" onChange={handleChange(setPassword)} password={password} />
                         </InputGroup>
                         <Button bg="primary.bg" color="primary.fg" type="submit" isDisabled={loading}>Log in</Button>
-                        <Text>Don't have an account? <Link as={NextLink} color="primary.bg" href="/register">Create an account</Link>
+                        <Text>Don&apos;t have an account? <Link as={NextLink} color="primary.bg" href="/register">Create an account</Link>
                         </Text>
                     </Stack>
                     </form>

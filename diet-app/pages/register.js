@@ -64,19 +64,19 @@ export default function Register() {
             <InputGroup>
                 <InputLeftAddon
                     pointerEvents="none"
-                    children={<AtSignIcon />} />
+                ><AtSignIcon /></InputLeftAddon>
                 <Input placeholder="Username" name="username" value={username} onChange={handleChange(setUsername)}/>
             </InputGroup>
             <InputGroup>
                 <InputLeftAddon
                     pointerEvents="none"
-                    children={<LockIcon />} />
+                ><LockIcon/></InputLeftAddon>
                 <Input placeholder="Password" name="password" type="password" value={password} onChange={handleChange(setPassword)}/>
             </InputGroup>
             <InputGroup>
                 <InputLeftAddon
                     pointerEvents="none"
-                    children={<LockIcon />} />
+                ><LockIcon /></InputLeftAddon>
                 <Input placeholder="Confirm Password" name="confirm-password" type="password" value={confirmPW} onChange={handleChange(setConfirmPW)}/>
             </InputGroup>
             <Button bg="primary.bg" color="primary.fg" type="submit" isDisabled={loading}>Register</Button>

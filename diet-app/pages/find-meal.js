@@ -26,7 +26,7 @@ function CuisineOption({selected, children, ...props}) {
     </Button>
 }
 
-export default function findMeal() {
+export default function FindMeal() {
     const [page, setPage] = useState(0);
     const [meal, setMeal] = useState();
     const [selectedCuisines, setSelectedCuisines] = useState([]);
