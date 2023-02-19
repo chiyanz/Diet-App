@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   const response = await fetch(endpoint + '&' + paramStr)
   const data = await response.json()
   console.log(endpoint + paramStr)
-  console.log(data)
+  // console.log(data)
 
   let filteredRecipeInfo = []
   for(const recipe of data.hits) {
@@ -26,6 +26,6 @@ export default async function handler(req, res) {
     })
   } 
   // default to 20 pages fetched 
-  console.log(filteredRecipeInfo)
+  // console.log(filteredRecipeInfo)
   res.status(200).json(filteredRecipeInfo)
 }
