@@ -1,4 +1,5 @@
 import { sessionOptions } from "@/lib/session";
+import splitData from "@/lib/splitData";
 import { Box, Button, Card, CardBody, CardFooter, Center, Flex, Heading, Image, Spinner, Stack, Tag, Text } from "@chakra-ui/react";
 import { withIronSessionSsr } from "iron-session/next";
 import Link from "next/link";
@@ -43,6 +44,7 @@ export default function Recommended({user}) {
     function viewRecipe(i) {
         return () => {
             setLastSelected(i + 1);
+            console.log(splitData([...recipes.slice(lastSelected, i).map(x => {return {...x, rating: 0}}), {...recipes[i], rating:1}]))
             fetch(`/api/user`, {
                 method: "POST",
                 body: JSON.stringify({

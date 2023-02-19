@@ -2,10 +2,11 @@ const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chine
 export default function splitData(history) {
     const X = [];
     const Y = [];
-    for (el of history) {
-        const { rating, ...tmp } = el;
+    for (const el of history) {
+        const { name, ingredients, link, img, rating, ...tmp } = el;
         const { cuisine, ...rest } = tmp;
-        const x = [rest.values(), ...cuisineVals.map(val => val==ciusine)]
+        console.log(typeof rest)
+        const x = [...Object.values(rest), ...cuisineVals.map(val => val==cuisine)]
         X.push(x);
         Y.push(rating);
     }

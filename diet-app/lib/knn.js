@@ -1,7 +1,7 @@
 const tf = require('@tensorflow/tfjs');
 const knnClassifier = require('@tensorflow-models/knn-classifier');
 
-NUM_CLASSES = 3
+const NUM_CLASSES = 3
 const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian']
 
 export default async function rankData(train, test) {
