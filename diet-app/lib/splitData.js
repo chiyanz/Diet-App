@@ -1,4 +1,5 @@
-const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian']
+import convertCuisine from "./convertCuisine";
+
 export default function splitData(history) {
     const X = [];
     const Y = [];
@@ -6,7 +7,7 @@ export default function splitData(history) {
         const { name, ingredients, link, img, rating, ...tmp } = el;
         const { cuisine, ...rest } = tmp;
         console.log(typeof rest)
-        const x = [...Object.values(rest), ...cuisineVals.map(val => val==cuisine)]
+        const x = [...Object.values(rest), ...convertCuisine(cuisine)]
         X.push(x);
         Y.push(rating);
     }
