@@ -30,7 +30,6 @@ export default function Home({user}) {
             if(res.ok)
                 return res.json()
             }).then(data => {
-                console.log("user data", data)
                 let userPrefs = data.user.preferences
                 let paramStr = "" 
                 if(userPrefs.excluded !== undefined && userPrefs.excluded.length !== 0) {
@@ -40,9 +39,7 @@ export default function Home({user}) {
                     paramStr = paramStr ? paramStr + "&": paramStr
                     paramStr += querystring.stringify({health: userPrefs.health})
                 }
-                console.log(paramStr)
                 paramStr = paramStr ? "?" + paramStr : "?ingr=1%2B&time=1%2B"
-                console.log(paramStr)
                 fetch(`/api/recipes${paramStr}`)
                 .then(raw => raw.json())
                 .then(recipes => {
@@ -124,7 +121,6 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     res,
   }) {
     const user = req.session.user;
-    console.log(user)
     if (user === undefined) {
       console.log("not logged in")
       res.setHeader("location", "/");

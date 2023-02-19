@@ -9,8 +9,6 @@ export default withIronSessionApiRoute(handler, sessionOptions)
 
 async function handler(req, res) {
   if(req.method == "GET") {
-    console.log("getting user info")
-    console.log(req.query._id)
     const user = await User.findOne({_id: req.query._id})
     if(user) {
       res.json({user})
@@ -22,7 +20,6 @@ async function handler(req, res) {
   // 2. add to the list of user's past 
   if(body.preferences) {
     console.log('updating preferences')
-    console.log(typeof body.preferences)
     User.updateOne({_id: body._id}, {
       $set: {
         preferences: body.preferences
@@ -32,7 +29,6 @@ async function handler(req, res) {
 
   if(body.history) {
     console.log('updating history')
-    console.log(body.history)
     User.updateOne({_id: body._id}, {
       $push: {
         history: {$each: body.history}
