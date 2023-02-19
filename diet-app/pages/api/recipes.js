@@ -7,9 +7,13 @@ export default async function handler(req, res) {
   const query = req.query
   const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}`
   let paramStr = querystring.stringify(query)
+  if(!query.time) {
+    paramStr += "&time=1%2B"
+  }
+  paramStr += "&health=alcohol-free&random=true"
   const response = await fetch(endpoint + '&' + paramStr)
   const data = await response.json()
-  console.log(endpoint + paramStr)
+  console.log(endpoint + "&" + paramStr)
   // console.log(data)
 
   let filteredRecipeInfo = []

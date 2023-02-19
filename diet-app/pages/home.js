@@ -22,27 +22,35 @@ export default function Home({user}) {
     }
 
     useEffect(() => {
-        const userPrefs = user.preferences ? user.preferences : null
-        console.log(userPrefs)
-        let paramStr = "" 
-        if(userPrefs.excluded !== undefined && userPrefs.excluded.length !== 0) {
-            paramStr += querystring.stringify({excluded: userPrefs.excluded})
-        }
-        if(userPrefs.health !== undefined && userPrefs.excluded.health !== 0) {
-            paramStr = paramStr ? paramStr + "&": paramStr
-            paramStr += querystring.stringify({health: userPrefs.health})
-        }
-        console.log(paramStr)
-        paramStr = paramStr ? "?" + paramStr : "?ingr=1%2B&random=true"
-        console.log(paramStr)
         setUsername(user.username)
-        fetch(`/api/recipes${paramStr}`)
-        .then(raw => raw.json())
-        .then(recipes => {
-            setMeals(recipes);
-            setMealsLoaded(true);
-        })
-        .catch(err => setError(true));
+        let data = { "_id" : user._id };
+        let url = new URL("http://localhost:3000/api/user");
+        for (let k in data) { url.searchParams.append(k, data[k]) }
+        fetch(url).then((res) => {
+            if(res.ok)
+                return res.json()
+            }).then(data => {
+                console.log("user data", data)
+                let userPrefs = data.user.preferences
+                let paramStr = "" 
+                if(userPrefs.excluded !== undefined && userPrefs.excluded.length !== 0) {
+                    paramStr += querystring.stringify({excluded: userPrefs.excluded})
+                }
+                if(userPrefs.health !== undefined && userPrefs.excluded.health !== 0) {
+                    paramStr = paramStr ? paramStr + "&": paramStr
+                    paramStr += querystring.stringify({health: userPrefs.health})
+                }
+                console.log(paramStr)
+                paramStr = paramStr ? "?" + paramStr : "?ingr=1%2B&time=1%2B"
+                console.log(paramStr)
+                fetch(`/api/recipes${paramStr}`)
+                .then(raw => raw.json())
+                .then(recipes => {
+                    setMeals(recipes);
+                    setMealsLoaded(true);
+                })
+                .catch(err => setError(true));
+                })
     }, [])
 
     return <>

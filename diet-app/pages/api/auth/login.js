@@ -31,7 +31,7 @@ export default withIronSessionApiRoute(async (req, res) => {
       return res.status(400).json("Error")
     }
     user.isLoggedIn = true
-    req.session.user = user
+    req.session.user = {_id: user._id}
     await req.session.save()
     res.json(user)
   } catch (error) {
