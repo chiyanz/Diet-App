@@ -1,10 +1,32 @@
 import styles from '@/styles/shared.module.css';
 import { AtSignIcon, LockIcon } from '@chakra-ui/icons';
-import { Button, Card, CardBody, CardHeader, Heading, Input, InputGroup, InputLeftAddon, Link, Stack, Text } from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, AlertDescription, Button, Card, CardBody, CardHeader, Collapse, Heading, Input, InputGroup, InputLeftAddon, Link, Stack, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { appName } from '@/app.config';
+import { useState } from 'react';
 
 export default function Index() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    function handleChange(fn) {
+        return e => fn(e.target.value)
+    }
+
+    function logIn(e) {
+        e.preventDefault();
+        fetch("/api/auth/login", {
+            method: "POST",
+            body: {
+                username: username,
+                password: password
+            }
+        }).then(res => res.json())
+        .then(data => console.log(data));
+    }
+    
     return <>
         <main className={styles.main}>
             <Stack spacing={8}>
@@ -15,25 +37,33 @@ export default function Index() {
             <Card>
                 <CardHeader>
                     <Heading fontSize="xl">Log In</Heading>
+                    <Collapse in={error}>
+                        <Alert status="error" mt={2}>
+                            <AlertIcon />
+                            <AlertTitle>{error}</AlertTitle>
+                        </Alert>
+                    </Collapse> 
                 </CardHeader>
                 <CardBody>
+                    <form onSubmit={logIn}>
                     <Stack spacing={4}>
                         <InputGroup>
                             <InputLeftAddon
                                 pointerEvents="none"
                                 children={<AtSignIcon />} />
-                            <Input placeholder="Username" name="username"></Input>
+                            <Input placeholder="Username" name="username" onChange={handleChange(setUsername)} value={username} />
                         </InputGroup>
                         <InputGroup>
                             <InputLeftAddon
                                 pointerEvents="none"
                                 children={<LockIcon />} />
-                            <Input placeholder="Password" name="password" type="password"></Input>
+                            <Input placeholder="Password" name="password" type="password" onChange={handleChange(setPassword)} password={password} />
                         </InputGroup>
-                        <Button bg="primary.bg" color="primary.fg">Log in</Button>
+                        <Button bg="primary.bg" color="primary.fg" type="submit" isDisabled={loading}>Log in</Button>
                         <Text>Don't have an account? <Link as={NextLink} color="primary.bg" href="/register">Create an account</Link>
                         </Text>
                     </Stack>
+                    </form>
                 </CardBody>
             </Card>
             </Stack>

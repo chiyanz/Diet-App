@@ -10,6 +10,6 @@ export default async function handler(req, res) {
     return res.json({status: 'User not found'})
   }
   else {
-    res.redirect('/home')
+    return res.sendStatus(200);
   }
 }
