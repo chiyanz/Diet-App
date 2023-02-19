@@ -14,12 +14,13 @@ export default async function rankData(train, test) {
     // console.log(arr)
     classifier.addExample(tf.tensor(arr), train[1][i])
   })
-  console.log(train[0])
+  
   test = splitData(test)
-  // console.log(test[0])
+  
+  
   let predictions = await Promise.all(test[0].map(async (arr) => {
-    const result = await classifier.predictClass(tf.tensor(arr), 2)
-    return parseInt(result.label)
+    const result = await classifier.predictClass(tf.tensor(arr), 1)
+    return result.label
   }))
   return predictions
 }

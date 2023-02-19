@@ -17,7 +17,7 @@ async function handler(req, res) {
   const query = req.query
   const userHistory = await User.findOne({_id: req.session.user._id})
   console.log(userHistory.history)
-  const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}`
+  const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}&cuisine=chinese`
   let paramStr = querystring.stringify(query)
   if(!query.time) {
     paramStr += "&time=1%2B"
