@@ -4,7 +4,6 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from "lib/session";
 import connect from '@/util/dbConnect'
 import User from '../../model/User'
-import { urlencoded } from 'express';
 
 const appId = process.env.NEXT_PUBLIC_APP_ID
 const appKey = process.env.NEXT_PUBLIC_APP_KEY
@@ -17,7 +16,6 @@ export default withIronSessionApiRoute(handler, sessionOptions)
 async function handler(req, res) {
   const query = req.query
   const userHistory = await User.findOne({_id: req.session.user._id})
-  console.log(userHistory.history)
   const endpoint = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${appId}&app_key=${appKey}`
   let paramStr = querystring.stringify(query)
   if(!query.time) {
@@ -48,7 +46,7 @@ async function handler(req, res) {
   })
 
   const results = rankData(userHistory.history, test)
-  console.log(results)
+  // console.log(results)
 
   
   // default to 20 pages fetched 
