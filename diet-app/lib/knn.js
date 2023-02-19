@@ -20,7 +20,7 @@ export default async function rankData(train, test) {
   
   let predictions = await Promise.all(test[0].map(async (arr) => {
     const result = await classifier.predictClass(tf.tensor(arr), 1)
-    return result.label
+    return parseInt(result.label)
   }))
   return predictions
 }

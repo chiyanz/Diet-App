@@ -4,6 +4,7 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from "lib/session";
 import connect from '@/util/dbConnect'
 import User from '../../model/User'
+import { filter } from '@chakra-ui/react';
 
 const appId = process.env.NEXT_PUBLIC_APP_ID
 const appKey = process.env.NEXT_PUBLIC_APP_KEY
@@ -47,9 +48,9 @@ async function handler(req, res) {
   })
 
   const results = await rankData(userHistory.history, test)
-  console.log(results)
+  filteredRecipeInfo = filteredRecipeInfo.filter((obj, i) => results[i] == 1)
 
-  
+  console.log(filteredRecipeInfo.length)
   // default to 20 pages fetched 
   // console.log(filteredRecipeInfo)
   res.status(200).json(filteredRecipeInfo)
