@@ -8,12 +8,18 @@ import { Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import { useRouter } from 'next/router';
 
 export default function Home({user}) {
+    let router = useRouter()
     const [username, setUsername] = useState("");
     const [meals, setMeals] = useState([]);
     const [mealsLoaded, setMealsLoaded] = useState(false);
     const [error, setError] = useState(false);
+
+    function editPreferences() {
+        router.push('/onboarding')
+    }
 
     useEffect(() => {
         const userPrefs = user.preferences ? user.preferences : null
@@ -26,7 +32,8 @@ export default function Home({user}) {
             paramStr = paramStr ? paramStr + "&": paramStr
             paramStr += querystring.stringify({health: userPrefs.health})
         }
-        paramStr = paramStr ? "?" + paramStr : paramStr
+        console.log(paramStr)
+        paramStr = paramStr ? "?" + paramStr : "?ingr=1%2B&random=true"
         console.log(paramStr)
         setUsername(user.username)
         fetch(`/api/recipes${paramStr}`)
@@ -54,7 +61,7 @@ export default function Home({user}) {
                     {username} <ChevronDownIcon />
                 </MenuButton>
                 <MenuList color="black">
-                    <MenuItem icon={<SettingsIcon/>}>edit preferences</MenuItem>
+                    <MenuItem icon={<SettingsIcon/>} onClick={editPreferences}>edit preferences</MenuItem>
                 </MenuList>
             </Menu>
         </Flex>
