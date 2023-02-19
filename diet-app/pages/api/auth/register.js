@@ -1,6 +1,5 @@
 import User from '../../../model/User'
 import connect from '@/util/dbConnect'
-
 connect()
 
 export default async function handler(req, res) {
