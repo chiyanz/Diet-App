@@ -5,8 +5,10 @@ import { ChevronDownIcon, SettingsIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "lib/session";
 
-export default function Home() {
+export default function Home({user}) {
     const [username, setUsername] = useState("");
     const [meals, setMeals] = useState([]);
     const [mealsLoaded, setMealsLoaded] = useState(false);
@@ -88,3 +90,27 @@ export default function Home() {
         </Slide> 
     </>
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({
+    req,
+    res,
+  }) {
+    const user = req.session.user;
+    console.log(user)
+    if (user === undefined) {
+      console.log("not logged in")
+      res.setHeader("location", "/");
+      res.statusCode = 302;
+      res.end();
+      return {
+        props: {
+          user: { isLoggedIn: false}
+        },
+      };
+    }
+  
+    return {
+      props: { user: req.session.user },
+    };
+  },
+  sessionOptions);
