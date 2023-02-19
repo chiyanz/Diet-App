@@ -47,10 +47,11 @@ async function handler(req, res) {
     return {calories: obj.calories, time: obj.time, cuisine: obj.cuisine}
   })
 
-  const results = await rankData(userHistory.history, test)
-  filteredRecipeInfo = filteredRecipeInfo.filter((obj, i) => results[i] == 1)
+  if(userHistory.history) {
+    const results = await rankData(userHistory.history, test)
+    filteredRecipeInfo = filteredRecipeInfo.filter((obj, i) => results[i] == 1)
+  }
 
-  console.log(filteredRecipeInfo.length)
   // default to 20 pages fetched 
   // console.log(filteredRecipeInfo)
   res.status(200).json(filteredRecipeInfo)
