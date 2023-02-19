@@ -9,11 +9,12 @@ import { useEffect, useState } from "react";
 export default function Recommended({user}) {
     const { query } = useRouter();
     const [recipes, setRecipes] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [lastSelected, setLastSelected] = useState(0);
 
     useEffect(() => {
-        const userPrefs = user.preferences ? user.preferences : null
+        const userPrefs = user.preferences || {};
 
         let paramStr = "" 
         if(userPrefs.excluded !== undefined && userPrefs.excluded.length !== 0) {
@@ -39,11 +40,27 @@ export default function Recommended({user}) {
         .catch(err => setError(true));
     }, []);
 
+    function viewRecipe(i) {
+        return () => {
+            setLastSelected(i + 1);
+            fetch(`/api/user`, {
+                method: "POST",
+                body: JSON.stringify({
+                    history: [...recipes.slice(lastSelected, i).map(x => {return {...x, rating: 0}}), {...recipes[i], rating:1}]
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: "same-origin"
+            });
+            window.open(recipes[i].link);
+        }
+    }
+
     return loading ? <Center><Spinner></Spinner></Center> : 
-    
     <Flex flexDir="row" flexWrap="nowrap" flex="none" w="100%" h="100vh" overflowX="auto" scrollSnapType="x mandatory" alignSelf="stretch">
     {
-        recipes.map(recipe => <Card w="100%" h="100%" flex="none" scrollSnapStop="always" scrollSnapAlign="center" overflowY="auto">
+        recipes.map((recipe, i) => <Card w="100%" h="100%" flex="none" scrollSnapStop="always" scrollSnapAlign="center" overflowY="auto">
             <Image objectFit="cover" src={recipe.img}/>
             <CardBody>
                 <Stack spacing={2}>
@@ -62,7 +79,8 @@ export default function Recommended({user}) {
                             recipe.ingredients.map(ingredient => <li>{ingredient}</li>)
                         }
                     </ul>
-                    <Button as={Link} href={recipe.link}>View Recipe</Button>
+                    {/*href={recipe.link} target="_blank"*/}
+                    <Button onClick={viewRecipe(i)}>View Recipe</Button>
                 </Stack>
             </CardBody>
         </Card>)

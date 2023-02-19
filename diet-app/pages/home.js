@@ -86,6 +86,9 @@ export default function Home({user}) {
                         <CardBody>
                             <Stack spacing={2}>
                                 <Heading fontSize="xl">{meal.name}</Heading>
+                                <Box>
+                                    {meal.cuisine.map(name => <Tag>{name.charAt(0).toUpperCase() + name.slice(1)}</Tag>)}
+                                </Box>
                                 <Box fontSize="sm">
                                     <Text>⚡ {Math.round(meal.calories)} Calories</Text>
                                     <Text>🕛 {meal.time}min</Text>

@@ -54,6 +54,13 @@ export default function findMeal() {
     function selectSurprise(i) {
         nextPage();
         setSelectedCuisines(cuisines.map(x => true));
+        router.push({
+            pathname: "/recommended",
+            query: {
+                mealType: meal,
+                cuisineType: cuisines
+            }
+        });
     }
 
     function chooseCuisines() {
