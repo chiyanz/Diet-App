@@ -26,7 +26,7 @@ function CuisineOption({selected, children, ...props}) {
     </Button>
 }
 
-export default function findMeal() {
+export default function FindMeal() {
     const [page, setPage] = useState(0);
     const [meal, setMeal] = useState();
     const [selectedCuisines, setSelectedCuisines] = useState([]);
@@ -78,10 +78,6 @@ export default function findMeal() {
         setError("Please choose at least one cuisine.")
     }
 
-    function submit() {
-        
-    }
-
     return <Box pos="relative">
     <Page show={page == 0}>
         <Flex flexDir="column" height="100%" gap={8}>
@@ -110,7 +106,7 @@ export default function findMeal() {
             <hr/>
             <Flex flexDir="row" gap="2%" rowGap={2} flexWrap="wrap" alignContent="flex-start">
                 { 
-                    cuisines.map((cuisine, i) => <CuisineOption 
+                    cuisines.map((cuisine, i) => <CuisineOption key={i} 
                         selected={selectedCuisines[i]} 
                         onClick={() => toggleCuisine(i)}>
                             {cuisine}

@@ -94,7 +94,7 @@ export default function Onboarding({user}) {
             <Heading>Which foods would you like to exclude?</Heading>
             <Flex flexDir="row" gap="2%" rowGap={2} flexWrap="wrap" alignContent="flex-start">
                 { 
-                    excludeNames.map((name, i) => <Option 
+                    excludeNames.map((name, i) => <Option key={i} 
                         selected={excludes[i]} 
                         onClick={() => toggleExclude(i)}>
                             {name}
@@ -109,7 +109,7 @@ export default function Onboarding({user}) {
             <Heading>What dietary restrictions do you have?</Heading>
             <Flex flexDir="row" gap="2%" rowGap={2} flexWrap="wrap" alignContent="flex-start">
                 { 
-                    healthNames.map((name, i) => <Option 
+                    healthNames.map((name, i) => <Option key={i}
                         selected={health[i]} 
                         onClick={() => toggleHealth(i)}>
                             {name}
