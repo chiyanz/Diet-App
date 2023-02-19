@@ -10,6 +10,7 @@ export default async function rankData(train, test) {
   train = splitData(train)
   const classifier = knnClassifier.create();
   train[0].forEach((arr, i) => {
+    // console.log(arr)
     classifier.addExample(tf.tensor(arr), train[1][i])
   })
   test = splitData(test)
