@@ -7,13 +7,13 @@ export default async function handler(req, res) {
   try {
     const user = await User.create(req.body)
     if(!user) {
-      return res.json({code: 'User not created'})
+      return res.status(400)
     }
     else {
-      res.redirect('/')
+      res.status(200)
     }
   }
   catch (err){
-    res.status(400).json({status: 'Not able to create a new user'})
+    res.status(500)
   }
 }
