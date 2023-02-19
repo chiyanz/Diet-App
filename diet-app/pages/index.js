@@ -4,8 +4,11 @@ import { Alert, AlertIcon, AlertTitle, AlertDescription, Button, Card, CardBody,
 import NextLink from 'next/link';
 import { appName } from '@/app.config';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 
 export default function Index() {
+    let router = useRouter()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -31,7 +34,11 @@ export default function Index() {
         })
         .then(res => {
             setLoading(false);
-            if (res.ok) return res.json();
+            if (res.ok) {
+                console.log("successful")
+                router.push('/home')
+                return res.json()
+            }
             else throw new Error()
         })
         .then(data => setError(""))

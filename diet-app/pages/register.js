@@ -3,8 +3,11 @@ import { AtSignIcon, LockIcon } from '@chakra-ui/icons';
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Button, Collapse, Heading, Input, InputGroup, InputLeftAddon, Link, Stack, Text } from '@chakra-ui/react';
 import NextLink from "next/link";
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 
 export default function Register() {
+    let router = useRouter()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPW, setConfirmPW] = useState("");
@@ -34,7 +37,10 @@ export default function Register() {
         })
         .then(res => {
             setLoading(false);
-            if (res.ok) return res.json();
+            if (res.ok) {
+                router.push('/')
+                return res.json()
+            }
             else throw new Error("Failed creating new account")
         })
         .then(data => setError(""))

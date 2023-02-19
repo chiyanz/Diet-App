@@ -4,6 +4,7 @@ import { useState } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const pageStyle = {
     position:"absolute", 
@@ -28,6 +29,7 @@ function Option({selected, children, ...props}) {
 }
 
 export default function Onboarding({user}) {
+    let router = useRouter()
     const [page, setPage] = useState(1);
     const [excludes, setExcludes] = useState([]);
     const [health, setHealth] = useState([]);
@@ -67,7 +69,10 @@ export default function Onboarding({user}) {
             credentials: "same-origin"
         })
         .then(res => {
-            if (res.ok) return res.json();
+            if (res.ok) {
+                router.push('/home')
+                return res.json()
+            }
             else throw new Error();
         })
         .then(data => setSuccess(true))
@@ -111,7 +116,7 @@ export default function Onboarding({user}) {
                         </Option>) 
                 }
             </Flex>
-            <Button bg="primary.bg" color="primary.fg" w="100%" onClick={submit}>Continue</Button>
+            <Button bg="primary.bg" color="primary.fg" w="100%" onClick={submit}>Confirm</Button>
         </Flex>
     </Page>
     <Page show={page == 3}>
