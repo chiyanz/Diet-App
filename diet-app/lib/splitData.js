@@ -4,9 +4,9 @@ export default function splitData(history) {
     const X = [];
     const Y = [];
     for (const el of history) {
-        const { name, ingredients, link, img, rating, ...tmp } = el;
-        const { cuisine, ...rest } = tmp;
-        const x = [...Object.values(rest), ...convertCuisine(cuisine)]
+        const { rating, ...tmp } = el;
+        const { cuisine, calories, time } = tmp;
+        const x = [ calories, time, ...convertCuisine(cuisine)]
         X.push(x);
         Y.push(rating);
     }

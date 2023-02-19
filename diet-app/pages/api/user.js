@@ -20,19 +20,20 @@ async function handler(req, res) {
   // 2. add to the list of user's past 
   if(body.preferences) {
     console.log('updating preferences')
-    User.updateOne({_id: body._id}, {
+    User.updateOne({_id: req.session.user._id}, {
       $set: {
         preferences: body.preferences
       }
     }).then(() => res.status(200).json({message: 'updated user preferences'}))
   }
-
+  console.log(body.history);
   if(body.history) {
     console.log('updating history')
-    User.updateOne({_id: body._id}, {
+    await User.updateOne({_id: req.session.user._id}, {
       $push: {
         history: {$each: body.history}
       }
-    }).then(() => res.status(200).json({message: 'updated user history'}))
+    })
+    res.status(200).json({message: 'updated user history'});
   }
 }

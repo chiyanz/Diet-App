@@ -12,7 +12,6 @@ export default async function rankData(train, test) {
   train[0].forEach((arr, i) => {
     classifier.addExample(tf.tensor(arr), train[1][i])
   })
-
   test = splitData(test)
   let predictions = await Promise.all(test[0].map(async (arr) => {
     const result = await classifier.predictClass(tf.tensor(arr), 3)
