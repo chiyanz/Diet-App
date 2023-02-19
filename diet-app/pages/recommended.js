@@ -44,7 +44,7 @@ export default function Recommended({user}) {
     function viewRecipe(i) {
         return () => {
             setLastSelected(i + 1);
-            console.log(splitData([...recipes.slice(lastSelected, i).map(x => {return {...x, rating: 0}}), {...recipes[i], rating:1}]))
+            console.log([...recipes.slice(lastSelected, i).map(x => {return {...x, rating: 0}}), {...recipes[i], rating:1}]);
             fetch(`/api/user`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -68,7 +68,10 @@ export default function Recommended({user}) {
                 <Stack spacing={2}>
                     <Heading fontSize="xl">{recipe.name}</Heading>
                     <Box>
-                        {recipe.cuisine.map(name => <Tag>{name.charAt(0).toUpperCase() + name.slice(1)}</Tag>)}
+                        <Tag>
+                        {recipe.cuisine}
+                        </Tag>
+                        
                     </Box>
                     <Box fontSize="sm">
                         <Text>⚡ {Math.round(recipe.calories)} Calories</Text>
