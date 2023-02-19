@@ -78,10 +78,6 @@ export default function FindMeal() {
         setError("Please choose at least one cuisine.")
     }
 
-    function submit() {
-        
-    }
-
     return <Box pos="relative">
     <Page show={page == 0}>
         <Flex flexDir="column" height="100%" gap={8}>
@@ -110,7 +106,7 @@ export default function FindMeal() {
             <hr/>
             <Flex flexDir="row" gap="2%" rowGap={2} flexWrap="wrap" alignContent="flex-start">
                 { 
-                    cuisines.map((cuisine, i) => <CuisineOption 
+                    cuisines.map((cuisine, i) => <CuisineOption key={i} 
                         selected={selectedCuisines[i]} 
                         onClick={() => toggleCuisine(i)}>
                             {cuisine}
