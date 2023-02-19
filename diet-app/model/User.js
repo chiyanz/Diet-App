@@ -1,5 +1,18 @@
 import mongoose, { mongo } from "mongoose"
 
+const preferencesSchema = new mongoose.Schema({
+  excluded: [String],
+  health: String
+})
+
+const historySchema = new mongoose.Schema({
+  name: String,
+  calories: String,
+  time: String,
+  ingredients: [String],
+  cuisine: String
+})
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -11,12 +24,12 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   preferences: preferencesSchema,
-  // recipes
+  history: {
+    type: [historySchema],
+    require: true
+  }
 })
 
-const preferencesSchema = new mongoose.Schema({
-  excluded: [String],
-  health: String
-})
+
 
 module.exports = mongoose.models.User || mongoose.model('User', userSchema)

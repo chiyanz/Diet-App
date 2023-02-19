@@ -4,9 +4,8 @@ connect()
 
 export default async function handler(req, res) {
   try {
-    console.log(req.body)
-    console.log(typeof req.body)
-    const user = await User.create(req.body)
+    const {username, password} = req.body
+    const user = await User.create({username, password, history: [{}]})
     if(!user) {
       return res.status(400).json("400")
     }

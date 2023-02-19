@@ -1,4 +1,3 @@
-import { filter } from '@chakra-ui/react'
 import querystring from 'querystring'
 
 const appId = process.env.NEXT_PUBLIC_APP_ID
@@ -22,6 +21,7 @@ export default async function handler(req, res) {
       time: details.totalTime, // total prep time required
       ingredients: details.ingredientLines, // list of ingredients required and their respecive amount
       link: details.url, // link to the recipe URL for execution directions 
+      cuisine: details.cuisineType,
       img: details.images.REGULAR.url // url of the image 
     })
   } 
