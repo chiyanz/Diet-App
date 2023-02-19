@@ -59,7 +59,8 @@ export default function Onboarding() {
             }),
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: "same-origin"
         })
         .then(res => {
             if (res.ok) return res.json();
