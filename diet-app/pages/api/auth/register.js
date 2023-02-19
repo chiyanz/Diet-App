@@ -5,7 +5,7 @@ connect()
 export default async function handler(req, res) {
   try {
     const {username, password} = req.body
-    const user = await User.create({username, password, preferences: {excluded: [], health: []}, history: [{}]})
+    const user = await User.create({username, password, preferences: {excluded: [], health: []}, history: []})
     if(!user) {
       return res.status(400).json("400")
     }

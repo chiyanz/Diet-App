@@ -45,7 +45,7 @@ async function handler(req, res) {
     return {calories: obj.calories, time: obj.time, cuisine: obj.cuisine}
   })
 
-  const results = rankData(userHistory.history, test)
+  // const results = rankData(userHistory.history, test)
   // console.log(results)
 
   

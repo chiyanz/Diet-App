@@ -44,11 +44,10 @@ export default function Recommended({user}) {
     function viewRecipe(i) {
         return () => {
             setLastSelected(i + 1);
-            console.log([...recipes.slice(lastSelected, i).map(x => {return {...x, rating: 0}}), {...recipes[i], rating:1}]);
             fetch(`/api/user`, {
                 method: "POST",
                 body: JSON.stringify({
-                    history: [...recipes.slice(lastSelected, i).map(x => {return {...x, rating: 0}}), {...recipes[i], rating:1}]
+                    history: [...recipes.slice(lastSelected, i).map(x => {return {calories: x.calories, time: x.time, cuisine: x.cuisine, rating: 0}}), {calories: recipes[i].calories,  time: recipes[i].time, cuisine: recipes[i].cuisine, rating:1}]
                 }),
                 headers: {
                     'Content-Type': 'application/json'
