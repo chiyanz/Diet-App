@@ -1,6 +1,8 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Collapse, Flex, Heading, Input, InputGroup, InputLeftElement, SlideFade, Stack, Tag } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Url from "url"
 
 const pageStyle = {
     position:"absolute", 
@@ -29,6 +31,7 @@ export default function findMeal() {
     const [meal, setMeal] = useState();
     const [selectedCuisines, setSelectedCuisines] = useState([]);
     const [error, setError] = useState("");
+    const router = useRouter();
 
     const cuisines = ['American', 'British', 'Caribbean', 'Central Europe', 'Chinese', 'Eastern Europe', 'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Mediterranean', 'Mexican', 'Middle Eastern', 'Nordic', 'South American', 'Southeast Asian']
     const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian']
@@ -55,8 +58,21 @@ export default function findMeal() {
 
     function chooseCuisines() {
         for (let el of selectedCuisines) 
-            if (el) return nextPage();
+            if (el) {
+                router.push({
+                    pathname: "/recommended",
+                    query: {
+                        mealType: meal,
+                        cuisineType: cuisines.filter((val, i) => selectedCuisines[i])
+                    }
+                });
+                return;
+            }
         setError("Please choose at least one cuisine.")
+    }
+
+    function submit() {
+        
     }
 
     return <Box pos="relative">

@@ -36,8 +36,8 @@ export default function Onboarding({user}) {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     
-    const excludeNames = ["Alcohol", "Celery", "Crustacean", "Dairy", "Egg", "Fish", "Gluten", "Mollusk", "Mustard", "Peanut", "Pork", "Red Meat", "Sesame", "Shellfish", "Soy", "Tree nut", "Wheat"];
-    const excludeValues = ["alcohol-free", "celery-free", "crustacean-free", "dairy-free", "egg-free", "fish-free", "gluten-free", "mollusk-free", "mustard-free", "peanut-free", "pork-free", "red-meat-free", "sesame-free", "shellfish-free", "tree-nut-free", "wheat-free"];
+    const excludeNames = ["Celery", "Crustacean", "Dairy", "Egg", "Fish", "Gluten", "Mollusk", "Mustard", "Peanut", "Pork", "Red Meat", "Sesame", "Shellfish", "Soy", "Tree nut", "Wheat"];
+    const excludeValues = ["celery-free", "crustacean-free", "dairy-free", "egg-free", "fish-free", "gluten-free", "mollusk-free", "mustard-free", "peanut-free", "pork-free", "red-meat-free", "sesame-free", "shellfish-free", "tree-nut-free", "wheat-free"];
     const healthNames = ["Kosher", "Keto", "Paleo", "Vegan", "Vegetarian"];
     const healthValues = ["kosher", "keto-friendly", "paleo", "vegan", "vegetarian"];
 
@@ -59,8 +59,8 @@ export default function Onboarding({user}) {
             body: JSON.stringify({
                 _id: user._id,
                 preferences: {
-                    excluded: excludeValues.filter((val, i) => excludes[i]),
-                    health: healthValues.filter((val, i) => health[i])
+                    health: [...excludeValues.filter((val, i) => excludes[i]), 
+                    ...healthValues.filter((val, i) => health[i])]
                 }
             }),
             headers: {
@@ -70,7 +70,7 @@ export default function Onboarding({user}) {
         })
         .then(res => {
             if (res.ok) {
-                router.push('/home')
+                // router.push('/home')
                 return res.json()
             }
             else throw new Error();
@@ -116,7 +116,7 @@ export default function Onboarding({user}) {
                         </Option>) 
                 }
             </Flex>
-            <Button bg="primary.bg" color="primary.fg" w="100%" onClick={submit}>Confirm</Button>
+            <Button bg="primary.bg" color="primary.fg" w="100%" onClick={submit}>Continue</Button>
         </Flex>
     </Page>
     <Page show={page == 3}>
