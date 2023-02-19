@@ -27,7 +27,7 @@ export default function Index() {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(res => res.json())
+        })
         .then(res => {
             setLoading(false);
             if (res.ok) return res.json();

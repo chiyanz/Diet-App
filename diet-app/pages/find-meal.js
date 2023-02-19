@@ -30,8 +30,8 @@ export default function findMeal() {
     const [selectedCuisines, setSelectedCuisines] = useState([]);
     const [error, setError] = useState("");
 
-    const cuisines = ['American', 'Asian', 'British', 'Caribbean', 'Central Europe', 'Chinese', 'Eastern Europe', 'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Kosher', 'Mediterranean', 'Mexican', 'Middle Eastern', 'Nordic', 'South American', 'Southeast Asian']
-    const cuisineVals = ['american', 'asian', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'kosher', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian', 'world']
+    const cuisines = ['American', 'British', 'Caribbean', 'Central Europe', 'Chinese', 'Eastern Europe', 'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Mediterranean', 'Mexican', 'Middle Eastern', 'Nordic', 'South American', 'Southeast Asian']
+    const cuisineVals = ['american', 'british', 'caribbean', 'centraleurope', 'chinese', 'easterneurope', 'french', 'greek', 'indian', 'italian', 'japanese', 'korean', 'mediterranean', 'mexican', 'middleeastern', 'nordic', 'southamerican', 'southeastasian']
 
     const nextPage = () => setPage(page + 1);
 
@@ -45,7 +45,6 @@ export default function findMeal() {
     function toggleCuisine(i) {
         const copy = [...selectedCuisines];
         copy[i] = !copy[i];
-        console.log(copy);
         setSelectedCuisines(copy);
     }
 
