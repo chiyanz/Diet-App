@@ -3,6 +3,7 @@ import { Button, Flex, Heading, SlideFade, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "lib/session";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 const pageStyle = {
@@ -74,7 +75,7 @@ export default function Onboarding({user}) {
             }
             else throw new Error();
         })
-        .then(data => setSuccess(false))
+        .then(data => setSuccess(true))
         .catch(() => setError(true))
         nextPage();
     }
@@ -116,6 +117,15 @@ export default function Onboarding({user}) {
                 }
             </Flex>
             <Button bg="primary.bg" color="primary.fg" w="100%" onClick={submit}>Confirm</Button>
+        </Flex>
+    </Page>
+    <Page show={page == 3}>
+        <Flex justifyContent="center" flexDir="column" gap={4} height="100%">
+            {
+                error ? <Heading textAlign="center">Something went wrong.</Heading> :
+                (success ? <Heading textAlign="center">Successfully saved preferences.</Heading> : <Heading>Loading...</Heading>)
+            }
+            <Link href="/home"><Button display={error||success} w="100%">Return Home</Button></Link> 
         </Flex>
     </Page>
     </>
