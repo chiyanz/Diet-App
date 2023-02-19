@@ -1,3 +1,4 @@
+import querystring from 'querystring'
 import styles from '@/styles/shared.module.css';
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Card, CardBody, CardHeader, Center, Fade, Flex, Heading, Image, Menu, MenuButton, MenuItem, MenuList, Slide, Spinner, Stack, Tag, Text } from '@chakra-ui/react';
 import { appName } from '@/app.config';
@@ -15,8 +16,20 @@ export default function Home({user}) {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        setUsername("username")
-        fetch("/api/recipes?q=ramen")
+        const userPrefs = user.preferences ? user.preferences : null
+        console.log(userPrefs)
+        let paramStr = "" 
+        if(userPrefs.excluded !== undefined && userPrefs.excluded.length !== 0) {
+            paramStr += querystring.stringify({excluded: userPrefs.excluded})
+        }
+        if(userPrefs.health !== undefined && userPrefs.excluded.health !== 0) {
+            paramStr = paramStr ? paramStr + "&": paramStr
+            paramStr += querystring.stringify({health: userPrefs.health})
+        }
+        paramStr = paramStr ? "?" + paramStr : paramStr
+        console.log(paramStr)
+        setUsername(user.username)
+        fetch(`/api/recipes${paramStr}`)
         .then(raw => raw.json())
         .then(recipes => {
             setMeals(recipes);

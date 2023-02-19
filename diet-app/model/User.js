@@ -2,7 +2,7 @@ import mongoose, { mongo } from "mongoose"
 
 const preferencesSchema = new mongoose.Schema({
   excluded: [String],
-  health: String
+  health: [String]
 })
 
 const historySchema = new mongoose.Schema({
